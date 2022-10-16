@@ -36,7 +36,7 @@ const Add = () => {
     <div className='form'>
         {/* <input type="text" placeholder='gender' onChange={handleChange}  name="gender" /> */}
         <select onChange={handleChange} name="gender" placeholder='Select gender'>
-            <option value="" disabled selected>Gender</option>
+            <option value="" disabled>Gender</option>
             <option value="Female">Female</option>
             <option value="Male">Male</option>
 
