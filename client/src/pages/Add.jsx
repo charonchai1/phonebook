@@ -17,6 +17,7 @@ const Add = () => {
     const navigate = useNavigate()
 
     const handleChange = (e) => {
+        console.log(e.target.value)
         setBook(prev=>({...prev, [e.target.name]: e.target.value }))
     }
 
@@ -33,7 +34,16 @@ const Add = () => {
 
   return (
     <div className='form'>
-        <input type="text" placeholder='gender' onChange={handleChange}  name="gender" />
+        {/* <input type="text" placeholder='gender' onChange={handleChange}  name="gender" /> */}
+        <select onChange={handleChange} name="gender" placeholder='Select gender'>
+            <option value="" disabled selected>Gender</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+
+        </select>
+
+
+
         <input type="text" placeholder='first name' onChange={handleChange} name="first_name"/>
         <input type="text" placeholder='last name' onChange={handleChange} name="last_name" />
         <input type="number" placeholder='age' onChange={handleChange} name="age" />
