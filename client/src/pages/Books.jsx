@@ -8,9 +8,6 @@ import "./Books.css";
 const Books = () => {
   const [books, setBooks] = useState([]);
 
-
-
-
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
@@ -23,30 +20,27 @@ const Books = () => {
     fetchAllBooks();
   }, []);
 
-
-
-
   const handleDelete = async (id) => {
     try {
       await axios.delete("http://localhost:8800/phonebook2/" + id);
       window.location.reload();
     } catch (err) {
-      console.log("handle error",err);
+      console.log("handle error", err);
     }
   };
 
-
-
-  const handleFavorite = async (id,value) => {
+  const handleFavorite = async (id, value) => {
     try {
-      await axios.put("http://localhost:8800/phonebook2/add-favorite/" + id,{favorite: !value});
+      await axios.put("http://localhost:8800/phonebook2/add-favorite/" + id, {
+        favorite: !value,
+      });
       window.location.reload();
     } catch (err) {
-      console.log("handle error favorite",err);
+      console.log("handle error favorite", err);
     }
-  }
+  };
 
-  console.log(books)
+  console.log(books);
 
   return (
     <div style={{ marginTop: "150px" }}>
@@ -89,18 +83,23 @@ const Books = () => {
                             <button className='btn btn-view'>View</button>
                             </Link> */}
 
+                  <button className="btn btn-edit">
+                    <Link to={`/update/${book.id}`}>Update</Link>
+                  </button>
                   <button
                     className="btn btn-delete"
                     onClick={() => handleDelete(book.id)}
                   >
                     delete
                   </button>
-                  <button className="btn btn-edit">
-                    <Link to={`/update/${book.id}`}>Update</Link>
+                  <button
+                    className={`btn btn-view ${
+                      book.favorite ? "bg-red-500" : "bg-black-500"
+                    }`}
+                    onClick={() => handleFavorite(book.id, book.favorite)}
+                  >
+                    {book.favorite ? "Unfavorite" : "favorite"}
                   </button>
-                  <button className= {`btn btn-view ${book.favorite ? "bg-red-500": "bg-black-500"}`}  onClick={() => handleFavorite(book.id,book.favorite)}>{
-                    book.favorite ? "Unfavorite" : "favorite"
-                  }</button>
                 </td>
               </tr>
             );

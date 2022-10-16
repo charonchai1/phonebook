@@ -23,8 +23,6 @@ function Favorite() {
   }, []);
 
 
-
-
   const handleDelete = async (id) => {
     try {
       await axios.delete("http://localhost:8800/phonebook2/" + id);
@@ -84,14 +82,14 @@ function Favorite() {
                           <button className='btn btn-view'>View</button>
                           </Link> */}
 
+                <button className="btn btn-edit">
+                  <Link to={`/update/${book.id}`}>Update</Link>
+                </button>
                 <button
                   className="btn btn-delete"
                   onClick={() => handleDelete(book.id)}
                 >
                   delete
-                </button>
-                <button className="btn btn-edit">
-                  <Link to={`/update/${book.id}`}>Update</Link>
                 </button>
                 <button className= {`btn btn-view ${book.favorite ? "bg-red-500": "bg-black-500"}`}  onClick={() => handleFavorite(book.id,book.favorite)}>{
                   book.favorite ?   "Unfavorite" : "Favorite"
