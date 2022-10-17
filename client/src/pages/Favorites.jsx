@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Books.css";
+import StarIcon from '@mui/icons-material/Star';
+
 
 
 function Favorite() {
@@ -43,7 +45,7 @@ function Favorite() {
     }
   }
 
-  console.log(books)
+  
 
   
   return (
@@ -52,6 +54,8 @@ function Favorite() {
     <table className="styled-table">
       <thead>
         <tr>
+        <th style={{ textAlign: "center" }}>Favorite.</th>
+
           <th style={{ textAlign: "center" }}>No.</th>
           <th style={{ textAlign: "center" }}>gender</th>
           <th style={{ textAlign: "center" }}>first-name</th>
@@ -66,7 +70,10 @@ function Favorite() {
         {books.map((book, index) => {
           return (
             <tr key={book.id}>
+         <td><StarIcon onClick={() => handleFavorite(book.id, book.favorite)} style={{ color: book.favorite ? "#fcda77" : "black" }}/></td>
+
               <th scope="row">{index + 1}</th>
+              
               <td>{book.gender}</td>
               <td>{book.first_name}</td>
               <td>{book.last_name}</td>
@@ -91,9 +98,7 @@ function Favorite() {
                 >
                   delete
                 </button>
-                <button className= {`btn btn-view ${book.favorite ? "bg-red-500": "bg-black-500"}`}  onClick={() => handleFavorite(book.id,book.favorite)}>{
-                  book.favorite ?   "Unfavorite" : "Favorite"
-                }</button>
+              
               </td>
             </tr>
           );
