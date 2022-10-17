@@ -4,9 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Books.css";
+import { useNavigate } from "react-router-dom";
+import StarIcon from '@mui/icons-material/Star';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -40,10 +43,11 @@ const Books = () => {
     }
   };
 
-  console.log(books);
-
   return (
+    
     <div style={{ marginTop: "150px" }}>
+      
+      <i className="fa fa-amazon"></i>
       <Link to="/add">
         <button className="btn btn-contact">Add new Phonebook</button>
       </Link>
@@ -53,6 +57,7 @@ const Books = () => {
       <table className="styled-table">
         <thead>
           <tr>
+          <th style={{ textAlign: "center" }}>Favorite.</th>
             <th style={{ textAlign: "center" }}>No.</th>
             <th style={{ textAlign: "center" }}>gender</th>
             <th style={{ textAlign: "center" }}>first-name</th>
@@ -67,7 +72,10 @@ const Books = () => {
           {books.map((book, index) => {
             return (
               <tr key={book.id}>
+                  <td><StarIcon onClick={() => handleFavorite(book.id, book.favorite)} style={{ color: book.favorite ? "#fcda77" : "black" }}/></td>
                 <th scope="row">{index + 1}</th>
+          
+
                 <td>{book.gender}</td>
                 <td>{book.first_name}</td>
                 <td>{book.last_name}</td>
@@ -83,8 +91,23 @@ const Books = () => {
                             <button className='btn btn-view'>View</button>
                             </Link> */}
 
-                  <button className="btn btn-edit">
-                    <Link to={`/update/${book.id}`}>Update</Link>
+                  <button
+                    className="btn btn-edit"
+                    onClick={() => {
+                      navigate(`/update/${book.id}`, {
+                        state: {
+                          gender: book.gender,
+                          fname: book.first_name,
+                          lname: book.last_name,
+                          age: book.age,
+                          contact: book.contact,
+                          position: book.position
+                        },
+                      });
+                    }}
+                  >
+                    {/* <Link to={`/update/${book.id}`}>Update</Link> */}
+                    Update
                   </button>
                   <button
                     className="btn btn-delete"
@@ -92,14 +115,14 @@ const Books = () => {
                   >
                     delete
                   </button>
-                  <button
+                  {/* <button
                     className={`btn btn-view ${
                       book.favorite ? "bg-red-500" : "bg-black-500"
                     }`}
                     onClick={() => handleFavorite(book.id, book.favorite)}
                   >
                     {book.favorite ? "Unfavorite" : "favorite"}
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             );
