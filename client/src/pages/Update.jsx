@@ -3,19 +3,32 @@ import { useState } from 'react'
 import { useNavigate, useLocation} from 'react-router-dom'
 import axios from 'axios'
 
+
 const Update = () => {
 
-    const [book,setBook] = useState({
-        gender:"",
-        first_name:"",
-        last_name:"",
-        age:"",
-        contact:null,
-        position:""
-    })
 
+    
     const navigate = useNavigate()
     const location = useLocation()
+
+    const [book,setBook] = useState({
+        
+        gender:location.state.gender,
+        first_name:location.state.fname,
+        last_name:location.state.lname,
+        age:location.state.age,
+        contact:location.state.contact,
+        position:location.state.position
+    })
+
+
+
+
+    
+
+    
+
+    console.log(location.state)
 
     const bookId = location.pathname.split('/')[2]
     
@@ -33,17 +46,25 @@ const Update = () => {
             console.log(err)
         }
     }
-    console.log(book)
+    
+
+
 
   return (
     <div className='form'>
         <h1>Update Phonebook</h1>
-        <input type="text" placeholder='gender' onChange={handleChange}  name="gender" />
-        <input type="text" placeholder='first name' onChange={handleChange} name="first_name"/>
-        <input type="text" placeholder='last name' onChange={handleChange} name="last_name" />
-        <input type="number" placeholder='age' onChange={handleChange} name="age" />
-        <input type="number" placeholder='contact' onChange={handleChange} name="contact" />
-        <input type="text" placeholder='position' onChange={handleChange} name="position" />
+        {/* <input type="text" placeholder='gender' onChange={handleChange} value={book.gender}  name="gender" /> */}
+        <select value={book.gender} onChange={handleChange} name="gender" placeholder='Select gender'>
+            <option value="" disabled>Gender</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+
+        </select>
+        <input type="text" placeholder='first name' onChange={handleChange}   value={book.first_name} name="first_name"/>
+        <input type="text" placeholder='last name' onChange={handleChange} value={book.last_name} name="last_name" />
+        <input type="number" placeholder='age' onChange={handleChange} value={book.age} name="age" />
+        <input type="number" placeholder='contact' onChange={handleChange} value={book.contact} name="contact" />
+        <input type="text" placeholder='position' onChange={handleChange} value={book.position} name="position" />
 
     <button onClick={handleClick}>Update</button>
     </div>
