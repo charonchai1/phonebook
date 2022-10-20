@@ -103,8 +103,7 @@ app.put("/phonebook2/:id", (req, res) => {
     const values = [
         req.body.favorite
     ]
-    console.log(req.body.favorite)
-    console.log(req.params.id)
+   
 
 
     db.query(q, [...values,bookId], (err, data) => {
