@@ -18,7 +18,6 @@ const Add = () => {
   
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
