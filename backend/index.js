@@ -51,8 +51,6 @@ app.post("/phonebook2", (req, res) => {
 });
 
 
-
-
 //get favorites
 app.get("/favorites", (req, res) => {
   const q = "SELECT * FROM phonebook2 WHERE favorite = true ";

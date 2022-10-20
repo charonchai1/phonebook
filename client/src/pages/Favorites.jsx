@@ -5,12 +5,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Books.css";
 import StarIcon from '@mui/icons-material/Star';
+import { useNavigate } from "react-router-dom";
+
 
 
 
 function Favorite() {
 
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -25,15 +29,18 @@ function Favorite() {
   }, []);
 
 
+
+
   const handleDelete = async (id) => {
-    try {
-      await axios.delete("http://localhost:8800/phonebook2/" + id);
-      window.location.reload();
-    } catch (err) {
-      console.log("handle error",err);
+    if (window.confirm("Are you sure you want to delete this")) {
+      try {
+        await axios.delete("http://localhost:8800/phonebook2/" + id);
+        window.location.reload();
+      } catch (err) {
+        console.log("handle error", err);
+      }
     }
   };
-
 
 
   const handleFavorite = async (id,value) => {
@@ -45,22 +52,20 @@ function Favorite() {
     }
   }
 
-  
 
-  
   return (
     <div style={{ marginTop: "150px" }}>
     <h2>FAVORITE</h2>
     <table className="styled-table">
       <thead>
         <tr>
-        <th style={{ textAlign: "center" }}>Favorite.</th>
+        <th style={{ textAlign: "center" }}>Favorite</th>
 
-          <th style={{ textAlign: "center" }}>No.</th>
-          <th style={{ textAlign: "center" }}>gender</th>
-          <th style={{ textAlign: "center" }}>first-name</th>
-          <th style={{ textAlign: "center" }}>last-name</th>
-          <th style={{ textAlign: "center" }}>age</th>
+          <th style={{ textAlign: "center" }}>No</th>
+          <th style={{ textAlign: "center" }}>Gender</th>
+          <th style={{ textAlign: "center" }}>First name</th>
+          <th style={{ textAlign: "center" }}>Last name</th>
+          <th style={{ textAlign: "center" }}>Age</th>
           <th style={{ textAlign: "center" }}>Contact</th>
           <th style={{ textAlign: "center" }}>Postion</th>
           <th style={{ textAlign: "center" }}>Action</th>
@@ -81,17 +86,25 @@ function Favorite() {
               <td>{book.contact}</td>
               <td>{book.position}</td>
               <td>
-                {/* <Link to={`/update/${book.id}`}>
-                          <button className='btn btn-edit'>Edit</button>
-                          </Link>
-                          <button className='btn btn-delete'>Delete</button>
-                          <Link to={`/view/${book.id}`}>
-                          <button className='btn btn-view'>View</button>
-                          </Link> */}
+            
 
-                <button className="btn btn-edit">
-                  <Link to={`/update/${book.id}`}>Update</Link>
-                </button>
+              <button
+                    className="btn btn-edit"
+                    onClick={() => {
+                      navigate(`/update/${book.id}`, {
+                        state: {
+                          gender: book.gender,
+                          fname: book.first_name,
+                          lname: book.last_name,
+                          age: book.age,
+                          contact: book.contact,
+                          position: book.position,
+                        },
+                      });
+                    }}
+                  >
+                    Update
+                  </button>
                 <button
                   className="btn btn-delete"
                   onClick={() => handleDelete(book.id)}

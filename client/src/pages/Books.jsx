@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Books.css";
 import { useNavigate } from "react-router-dom";
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -24,11 +24,13 @@ const Books = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete("http://localhost:8800/phonebook2/" + id);
-      window.location.reload();
-    } catch (err) {
-      console.log("handle error", err);
+    if (window.confirm("Are you sure you want to delete this")) {
+      try {
+        await axios.delete("http://localhost:8800/phonebook2/" + id);
+        window.location.reload();
+      } catch (err) {
+        console.log("handle error", err);
+      }
     }
   };
 
@@ -44,10 +46,7 @@ const Books = () => {
   };
 
   return (
-    
     <div style={{ marginTop: "150px" }}>
-      
-      <i className="fa fa-amazon"></i>
       <Link to="/add">
         <button className="btn btn-contact">Add new Phonebook</button>
       </Link>
@@ -57,12 +56,12 @@ const Books = () => {
       <table className="styled-table">
         <thead>
           <tr>
-          <th style={{ textAlign: "center" }}>Favorite.</th>
-            <th style={{ textAlign: "center" }}>No.</th>
-            <th style={{ textAlign: "center" }}>gender</th>
-            <th style={{ textAlign: "center" }}>first-name</th>
-            <th style={{ textAlign: "center" }}>last-name</th>
-            <th style={{ textAlign: "center" }}>age</th>
+            <th style={{ textAlign: "center" }}>Favorite</th>
+            <th style={{ textAlign: "center" }}>No</th>
+            <th style={{ textAlign: "center" }}>Gender</th>
+            <th style={{ textAlign: "center" }}>First name</th>
+            <th style={{ textAlign: "center" }}>Last name</th>
+            <th style={{ textAlign: "center" }}>Age</th>
             <th style={{ textAlign: "center" }}>Contact</th>
             <th style={{ textAlign: "center" }}>Postion</th>
             <th style={{ textAlign: "center" }}>Action</th>
@@ -72,9 +71,13 @@ const Books = () => {
           {books.map((book, index) => {
             return (
               <tr key={book.id}>
-                  <td><StarIcon onClick={() => handleFavorite(book.id, book.favorite)} style={{ color: book.favorite ? "#fcda77" : "black" }}/></td>
+                <td>
+                  <StarIcon
+                    onClick={() => handleFavorite(book.id, book.favorite)}
+                    style={{ color: book.favorite ? "#fcda77" : "black" }}
+                  />
+                </td>
                 <th scope="row">{index + 1}</th>
-          
 
                 <td>{book.gender}</td>
                 <td>{book.first_name}</td>
@@ -83,14 +86,6 @@ const Books = () => {
                 <td>{book.contact}</td>
                 <td>{book.position}</td>
                 <td>
-                  {/* <Link to={`/update/${book.id}`}>
-                            <button className='btn btn-edit'>Edit</button>
-                            </Link>
-                            <button className='btn btn-delete'>Delete</button>
-                            <Link to={`/view/${book.id}`}>
-                            <button className='btn btn-view'>View</button>
-                            </Link> */}
-
                   <button
                     className="btn btn-edit"
                     onClick={() => {
@@ -101,12 +96,11 @@ const Books = () => {
                           lname: book.last_name,
                           age: book.age,
                           contact: book.contact,
-                          position: book.position
+                          position: book.position,
                         },
                       });
                     }}
                   >
-                    {/* <Link to={`/update/${book.id}`}>Update</Link> */}
                     Update
                   </button>
                   <button
@@ -115,14 +109,6 @@ const Books = () => {
                   >
                     delete
                   </button>
-                  {/* <button
-                    className={`btn btn-view ${
-                      book.favorite ? "bg-red-500" : "bg-black-500"
-                    }`}
-                    onClick={() => handleFavorite(book.id, book.favorite)}
-                  >
-                    {book.favorite ? "Unfavorite" : "favorite"}
-                  </button> */}
                 </td>
               </tr>
             );
