@@ -2,7 +2,6 @@ import React from 'react'
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import "./Books.css";
 import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from "react-router-dom";
